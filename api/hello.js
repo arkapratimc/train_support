@@ -5,7 +5,7 @@
  * @param {import('@vercel/node').VercelRequest} request - The Vercel request object.
  * @param {import('@vercel/node').VercelResponse} response - The Vercel response object.
  */
-function GET(request) {
+export function GET(request) {
   // Set the HTTP status code to 200 (OK)
   // response.statusCode = 200;
 
@@ -18,4 +18,3 @@ function GET(request) {
   // Alternatively, for a plain text response:
   // response.status(200).send('Hello, World from Vercel Serverless Function!');
 }
-exports.GET = GET;
