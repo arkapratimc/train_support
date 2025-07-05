@@ -1,9 +1,7 @@
-import puppeteer, {executablePath} from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 
 export async function GET(request) {
-    const browser = await puppeteer.launch({
-        executablePath: executablePath()
-    });
+    const browser = await puppeteer.launch();
 
     const page = await browser.newPage();
     await page.goto('https://example.com');
