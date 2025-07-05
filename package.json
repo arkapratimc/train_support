@@ -1,8 +1,6 @@
 {
-  "scripts": {
-    "preinstall": "npx puppeteer browsers install chrome"
-  },
   "dependencies": {
-    "puppeteer": "^24.11.2"
+    "@playwright/browser-chromium": "^1.53.2",
+    "playwright": "^1.53.2"
   }
 }

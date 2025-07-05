@@ -1,11 +1,15 @@
-import puppeteer from 'puppeteer';
+import { chromium } from 'playwright';
 
 export async function GET(request) {
-    const browser = await puppeteer.launch({executablePath: '/vercel/.cache/puppeteer/chrome/linux-138.0.7204.92/chrome-linux64/chrome'});
-
+    // lets try with playwright ??
+    const browser = await chromium.launch();
     const page = await browser.newPage();
+
     await page.goto('https://example.com');
+
     const title = await page.title();
+    console.log('Page title:', title);
+
     await browser.close();
 
     return new Response(title);
