@@ -1,8 +1,5 @@
 {
-  "scripts": {
-    "postinstall": "npx playwright install && npx playwright install-deps"
-  },
   "dependencies": {
-    "playwright": "^1.53.2"
+    "puppeteer": "^24.11.2"
   }
 }
