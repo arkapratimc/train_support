@@ -3,7 +3,7 @@ const fs = require('fs');
 const puppeteer = require("puppeteer");
 const path = require('path');
 
-async function test() {
+/* async function test() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
@@ -33,7 +33,7 @@ async function test() {
     await browser.close();
 }
 test().catch(err => console.error(err))
-
+*/
 function serveFile(filePath, contentType, res) {
     fs.readFile(path.join(__dirname, filePath), (err, data) => {
         if (err) {
