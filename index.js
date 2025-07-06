@@ -63,8 +63,8 @@ const server = http.createServer((req, res) => {
         serveFile('public/index.html', 'text/html', res);
     } else if (req.url === '/style.css') {
         serveFile('public/style.css', 'text/css', res);
-    } else if (req.url === '/script.js') {
-        serveFile('public/script.js', 'text/javascript', res);
+    } else if (req.url === '/code.js') {
+        serveFile('public/code.js', 'text/javascript', res);
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('404 Not Found');
