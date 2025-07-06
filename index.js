@@ -34,6 +34,17 @@ const path = require('path');
 }
 test().catch(err => console.error(err))
 */
+
+let PAGE = undefined;
+
+async function open_the_browser() {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    PAGE = page;
+}
+
+open_the_browser().then(() => console.log("the browser & a new page opened")).catch(err => console.error(`something happened`));
+
 function serveFile(filePath, contentType, res) {
     fs.readFile(path.join(__dirname, filePath), (err, data) => {
         if (err) {
