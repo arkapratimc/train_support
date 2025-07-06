@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "serve": "npx lt --port 3000",
+    "start": "node index.js"
+  },
   "dependencies": {
     "localtunnel": "^2.0.2",
     "puppeteer": "^24.11.2"

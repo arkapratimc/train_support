@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const puppeteer = require("puppeteer");
+const path = require('path');
 
 async function test() {
     const browser = await puppeteer.launch();
