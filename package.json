@@ -1,7 +1,7 @@
 {
   "scripts": {
     "serve": "npx lt --port 3000",
-    "start": "node index.js"
+    "start": "node index.mjs"
   },
   "dependencies": {
     "localtunnel": "^2.0.2",

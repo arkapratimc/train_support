@@ -1,8 +1,13 @@
-const http = require('http');
-const fs = require('fs');
-const puppeteer = require("puppeteer");
-const path = require('path');
-const querystring = require("querystring");
+import http from 'http';
+import fs from 'fs'; // or `import * as fs from 'fs';` if using fs methods directly
+import puppeteer from 'puppeteer';
+import path from 'path';
+import querystring from 'querystring';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 
 /* async function test() {
@@ -37,15 +42,11 @@ const querystring = require("querystring");
 test().catch(err => console.error(err))
 */
 
-let PAGE = undefined;
 
-async function open_the_browser() {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    PAGE = page;
-}
 
-open_the_browser().then(() => console.log("the browser & a new page opened")).catch(err => console.error(`something happened`));
+const browser = await puppeteer.launch();
+const PAGE = await browser.newPage();
+
 
 function serveFile(filePath, contentType, res) {
     fs.readFile(path.join(__dirname, filePath), (err, data) => {
@@ -74,9 +75,19 @@ const server = http.createServer((req, res) => {
             body += chunk.toString();
         });
 
-        req.on("end", () => {
+        req.on("end", async () => {
             const data = querystring.parse(body);
             console.log(data);
+            /* PAGE.goto("https://enquiry.indianrail.gov.in/mntes/").then((res) => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.error(err);
+            }) */
+            await PAGE.goto("https://enquiry.indianrail.gov.in/mntes/");
+            const title = await PAGE.title(); // ⬅️ Get the page's <title>
+
+            console.log('Page Title:', title);
             res.writeHead(200, { "Content-Type": "text/plain" });
             res.end(`Received train number: ${data.train_number}`);
         });
