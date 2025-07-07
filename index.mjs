@@ -46,6 +46,7 @@ test().catch(err => console.error(err))
 
 const browser = await puppeteer.launch();
 const PAGE = await browser.newPage();
+await PAGE.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
 
 
 function serveFile(filePath, contentType, res) {
@@ -84,10 +85,10 @@ const server = http.createServer((req, res) => {
             .catch(err => {
                 console.error(err);
             }) */
-            await PAGE.goto("https://enquiry.indianrail.gov.in/mntes/");
-            const title = await PAGE.title(); // ⬅️ Get the page's <title>
+            await PAGE.goto("https://enquiry.indianrail.gov.in/mntes/", { waitUntil: 'networkidle2' });
+            await PAGE.screenshot({ path: 'example.png' });  // ⬅️ Get the page's <title>
 
-            console.log('Page Title:', title);
+            
             res.writeHead(200, { "Content-Type": "text/plain" });
             res.end(`Received train number: ${data.train_number}`);
         });
@@ -104,3 +105,19 @@ const port = 3000;
 server.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
+
+
+function handleExit(type, err) {
+  console.log(`💥 Exiting due to: ${type}`);
+  if (err) console.error(err);
+  // your cleanup logic here
+  browser.close().catch(err => console.error(err))
+  process.exit(1);
+}
+
+// Attach all relevant handlers
+process.on('exit', () => handleExit('exit'));
+process.on('SIGINT', () => handleExit('SIGINT'));
+process.on('SIGTERM', () => handleExit('SIGTERM'));
+process.on('uncaughtException', err => handleExit('uncaughtException', err));
+process.on('unhandledRejection', reason => handleExit('unhandledRejection', reason));
