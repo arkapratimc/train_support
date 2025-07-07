@@ -2,6 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const puppeteer = require("puppeteer");
 const path = require('path');
+const querystring = require("querystring");
+
 
 /* async function test() {
     const browser = await puppeteer.launch();
@@ -65,6 +67,22 @@ const server = http.createServer((req, res) => {
         serveFile('public/style.css', 'text/css', res);
     } else if (req.url === '/code.js') {
         serveFile('public/code.js', 'text/javascript', res);
+    } else if (req.method === "POST" && req.url === "/train-number-check") {
+        let body = "";
+
+        req.on("data", chunk => {
+            body += chunk.toString();
+        });
+
+        req.on("end", () => {
+            const data = querystring.parse(body);
+            console.log(data);
+            res.writeHead(200, { "Content-Type": "text/plain" });
+            res.end(`Received train number: ${data.train_number}`);
+        });
+    } else if (req.url === "/favicon.ico") {
+        res.writeHead(204); // No Content
+        return res.end();
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('404 Not Found');
